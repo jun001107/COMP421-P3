@@ -27,7 +27,7 @@ public class MainApp {
 
             switch (choice) {
                 case 1:
-                    System.out.println("Check available books.");
+                    System.out.println("Search for Books");
                     break;
                 case 2:
                     authorsDAO.getAuthor();
@@ -42,6 +42,12 @@ public class MainApp {
                     System.out.println("Check available reservations.");
                     break;
                 case 6:
+                    System.out.println("Check available reservations.");
+                    break;
+                case 7:
+                    System.out.println("Check available reservations.");
+                    break;
+                case 8:
                     exit = true;
                     System.out.println("Goodbye!");
                     break;
