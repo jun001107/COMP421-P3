@@ -9,25 +9,6 @@ public class Books {
         this.connection = connection;
     }
 
-    public void addBook(String isbn, String title, String genre, int pages) {
-        String query = "INSERT INTO books VALUES (?, ?, ?, ?)";
-
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setString(1, isbn);
-            ps.setString(2, title);
-            ps.setString(3, genre);
-            ps.setInt(4, pages);
-            int rowsAffected = ps.executeUpdate();
-            if (rowsAffected > 0) {
-                System.out.println("Book added successfully");
-            } else {
-                System.out.println("Book not added");
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
     public void getBookByGenre(String genre) {
         String query = "SELECT b.title, a.a_name FROM Books b " +
                 "JOIN Wrote w ON b.isbn = w.isbn " +

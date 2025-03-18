@@ -2,27 +2,15 @@ package McGillLibraryDB.utils;
 
 public class MenuHelper {
     public static void displayMainMenu() {
-        System.out.println("=========================================================");
-        System.out.println("Welcome to the McGill Library! What would you like to do?");
-        System.out.println("\t1. Search for Books");
-        System.out.println("\t2. Borrow a Book");
-        System.out.println("\t3. Return a Book");
-        System.out.println("\t4. Pay a Fine");
-        System.out.println("\t5. Reserve a Book");
-        System.out.println("\t6. Manage Authors");
-        System.out.println("\t7. Check Book Availability by Location");
-        System.out.println("\t8. Quit");
+        System.out.println("=====================================================================");
+        System.out.println("Welcome to the McGill Library! What would you like to do? (Staff mode)");
+        System.out.println("\t1. Search Books");
+        System.out.println("\t2. Check Book Availability");
+        System.out.println("\t3. Manage Copies");
+        System.out.println("\t4. Loan & Return Books");
+        System.out.println("\t5. Generate Reports & Analytics");
+        System.out.println("\t6. Quit");
         System.out.print("Please Enter Your Choice: ");
-    }
-
-    public static void displayBookAvailability() {
-        System.out.println("\n==== Check book availability by Location ====");
-        System.out.println("\t1. Please enter the location of the book");
-    }
-
-    public static void displayReturnBook() {
-        System.out.println("\n==== Return a Book ====");
-        System.out.println("Please enter the Copy ID for the book you are returning: ");
     }
 
     public static void displaySearchForBooks() {
@@ -31,16 +19,38 @@ public class MenuHelper {
         System.out.println("\t2. Search by genre (Action, Adventure, Animation, Romance, Western, war, Fantasy, " +
                 "Horror, Sci-Fi, Comedy, Crime, Documentary, Thriller, Children, Musical, Mystery)");
         System.out.println("\t3. Search by Title");
-        System.out.println("Please Enter Your Choice: ");
+        System.out.println("\t4. Go Back");
+        System.out.print("Please Enter Your Choice: ");
     }
 
-    public static void displayManageAuthorsMenu() {
-        System.out.println("\n==== Manage Authors ====");
-        System.out.println("\t1. Add a New Author");
-        System.out.println("\t2. Update an Author");
-        System.out.println("\t3. Delete an Author");
-        System.out.println("\t4. View an Author's Books");
-        System.out.println("\t5. Return to Main Menu");
-        System.out.println("Please Enter Your Choice:");
+    public static void displayCheckBookAvailability() {
+        System.out.println("\n==== Check Book Availability =====");
+    }
+
+    public static void displayManageCopies() {
+        System.out.println("\n==== Manage Copies =====");
+        System.out.println("\t1. Register a New Copies");
+        System.out.println("\t2. Remove a Copy");
+        System.out.println("\t3. Go Back");
+        System.out.print("Please Enter Your Choice: ");
+    }
+
+    public static void displayLoanAndReturnBooks() {
+        System.out.println("\n==== Loan and Return Books =====");
+        System.out.println("\t1. Issue a Book to a customer");
+        System.out.println("\t2. Process Book Returns");
+        System.out.println("\t3. View Borrowing History");
+        System.out.println("\t4. Go Back");
+        System.out.print("Please Enter Your Choice: ");
+    }
+
+    public static void displayGenerateReports() {
+        System.out.println("\n==== Generate Reports & Analytics =====");
+        System.out.println("\t1. Popular Books Report");
+        System.out.println("\t2. User Borrowing History Report");
+        System.out.println("\t3. Overdue Books & Fines Report");
+        System.out.println("\t4. Library Branch Performance Report");
+        System.out.println("\t5. Go Back");
+        System.out.print("Please Enter Your Choice: ");
     }
 }

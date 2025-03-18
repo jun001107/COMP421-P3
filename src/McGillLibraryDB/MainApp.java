@@ -1,25 +1,45 @@
 package McGillLibraryDB;
 
 import McGillLibraryDB.dao.*;
+import McGillLibraryDB.handler.*;
 import McGillLibraryDB.utils.*;
+
+import java.awt.*;
 import java.sql.*;
 
 public class MainApp {
+    private static Authors authorsDAO;
+    public static Books booksDAO;
+    public static BookSearchHandler bookSearchHandler;
+    public static Citizens citizensDAO;
+    public static Copies copiesDAO;
+    public static Fines finesDAO;
+    public static HasBook hasBookDAO;
+    public static IsLocated isLocatedDAO;
+    public static Loans loansDAO;
+    public static Locations locationsDAO;
+    public static Reservations reservationsDAO;
+    public static Wrote wroteDAO;
 
-    private static void init(Connection con) {
+    private static void initializeComponents(Connection con) {
         // Create the DAO instances using the shared connection
-        Authors authorsDAO = new Authors(con);
-        Books booksDAO = new Books(con);
-        Citizens citizensDAO = new Citizens(con);
-        Copies copiesDAO = new Copies(con);
-        Fines finesDAO = new Fines(con);
-        HasBook hasBookDAO = new HasBook(con);
-        IsLocated isLocatedDAO = new IsLocated(con);
-        Loans loansDAO = new Loans(con);
-        Locations locationsDAO = new Locations(con);
-        Reservations reservationsDAO = new Reservations(con);
-        Wrote writeDAO = new Wrote(con);
+        authorsDAO = new Authors(con);
 
+        booksDAO = new Books(con);
+        bookSearchHandler = new BookSearchHandler(booksDAO);
+
+        citizensDAO = new Citizens(con);
+        copiesDAO = new Copies(con);
+        finesDAO = new Fines(con);
+        hasBookDAO = new HasBook(con);
+        isLocatedDAO = new IsLocated(con);
+        loansDAO = new Loans(con);
+        locationsDAO = new Locations(con);
+        reservationsDAO = new Reservations(con);
+        wroteDAO = new Wrote(con);
+    }
+
+    private static void runProgram() {
         boolean exit = false;
         int intInput;
         String strInput;
@@ -29,58 +49,23 @@ public class MainApp {
             intInput = UserInputHelper.getIntInput();
 
             switch (intInput) {
-                case 1:
-                    MenuHelper.displaySearchForBooks();
-                    intInput = UserInputHelper.getIntInput();
-
-                    switch (intInput) {
-                        case 1:
-                            System.out.print("Enter the name of Author: ");
-                            strInput = UserInputHelper.getStringInput();
-                            // call SELECT book FROM Books WHERE author = strInput
-                            booksDAO.getBookByAuthor(strInput);
-                            // Print the output
-                            break;
-                        case 2:
-                            System.out.print("Enter the genre: ");
-                            strInput = UserInputHelper.getStringInput();
-                            // call SELECT book FROM Books WHERE genre = strInput
-                            booksDAO.getBookByGenre(strInput);
-                            // Print the output
-                            break;
-                        case 3:
-                            System.out.print("Enter the Title of the book: ");
-                            strInput = UserInputHelper.getStringInput();
-                            // call SELECT book FROM Books WHERE title = strInput
-                            booksDAO.getBookByTitle(strInput);
-                            // Print the output
-                            break;
-                        default:
-                            System.out.println("Invalid option. Please enter a valid option.");
-                            break;
-                    }
-
-
+                case 1: // Search Books
+                    MenuHelper.displaySearchForBooks(); // display options
+                    bookSearchHandler.searchBooks(); // Return lists of books
                     break;
-                case 2:
-                    authorsDAO.getAuthor();
+                case 2: // Check Book Availability
+                    MenuHelper.displayCheckBookAvailability(); // display headline
                     break;
-                case 3:
-                    System.out.println("Check available citizens.");
+                case 3: // Manage Copies
+                    MenuHelper.displayManageCopies(); // display options
                     break;
-                case 4:
-                    System.out.println("Check available locations.");
+                case 4: // Loan & Return Books
+                    MenuHelper.displayLoanAndReturnBooks(); // display options
                     break;
-                case 5:
-                    System.out.println("Check available reservations.");
+                case 5: // Generate Reports & Analytics
+                    MenuHelper.displayGenerateReports(); // display options
                     break;
-                case 6:
-                    System.out.println("Check available reservations.");
-                    break;
-                case 7:
-                    System.out.println("Check available reservations.");
-                    break;
-                case 8:
+                case 6: // Quit
                     exit = true;
                     System.out.println("Goodbye!");
                     break;
@@ -89,6 +74,11 @@ public class MainApp {
             }
         }
         UserInputHelper.closeScanner();
+    }
+
+    private static void init(Connection con) {
+        initializeComponents(con);
+        runProgram();
     }
 
     public static void main(String[] args){
