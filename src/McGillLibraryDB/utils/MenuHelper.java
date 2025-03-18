@@ -2,6 +2,7 @@ package McGillLibraryDB.utils;
 
 public class MenuHelper {
     public static void displayMainMenu() {
+        System.out.println("=========================================================");
         System.out.println("Welcome to the McGill Library! What would you like to do?");
         System.out.println("\t1. Search for Books");
         System.out.println("\t2. Borrow a Book");
@@ -29,7 +30,7 @@ public class MenuHelper {
         System.out.println("\t1. Search by Author name");
         System.out.println("\t2. Search by genre (Action, Adventure, Animation, Romance, Western, war, Fantasy, " +
                 "Horror, Sci-Fi, Comedy, Crime, Documentary, Thriller, Children, Musical, Mystery)");
-        System.out.println("\t2. Search by Title");
+        System.out.println("\t3. Search by Title");
         System.out.println("Please Enter Your Choice: ");
     }
 

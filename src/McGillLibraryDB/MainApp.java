@@ -5,6 +5,7 @@ import McGillLibraryDB.utils.*;
 import java.sql.*;
 
 public class MainApp {
+
     private static void init(Connection con) {
         // Create the DAO instances using the shared connection
         Authors authorsDAO = new Authors(con);
@@ -20,14 +21,46 @@ public class MainApp {
         Wrote writeDAO = new Wrote(con);
 
         boolean exit = false;
+        int intInput;
+        String strInput;
 
         while (!exit) {
             MenuHelper.displayMainMenu();
-            int choice = UserInputHelper.getIntInput();
+            intInput = UserInputHelper.getIntInput();
 
-            switch (choice) {
+            switch (intInput) {
                 case 1:
-                    System.out.println("Search for Books");
+                    MenuHelper.displaySearchForBooks();
+                    intInput = UserInputHelper.getIntInput();
+
+                    switch (intInput) {
+                        case 1:
+                            System.out.print("Enter the name of Author: ");
+                            strInput = UserInputHelper.getStringInput();
+                            // call SELECT book FROM Books WHERE author = strInput
+                            booksDAO.getBookByAuthor(strInput);
+                            // Print the output
+                            break;
+                        case 2:
+                            System.out.print("Enter the genre: ");
+                            strInput = UserInputHelper.getStringInput();
+                            // call SELECT book FROM Books WHERE genre = strInput
+                            booksDAO.getBookByGenre(strInput);
+                            // Print the output
+                            break;
+                        case 3:
+                            System.out.print("Enter the Title of the book: ");
+                            strInput = UserInputHelper.getStringInput();
+                            // call SELECT book FROM Books WHERE title = strInput
+                            booksDAO.getBookByTitle(strInput);
+                            // Print the output
+                            break;
+                        default:
+                            System.out.println("Invalid option. Please enter a valid option.");
+                            break;
+                    }
+
+
                     break;
                 case 2:
                     authorsDAO.getAuthor();
