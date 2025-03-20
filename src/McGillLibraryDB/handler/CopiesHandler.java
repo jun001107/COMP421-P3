@@ -12,7 +12,7 @@ public class CopiesHandler {
 
     public void manageCopies() {
         int intInput = UserInputHelper.getIntInput();
-        int copy_id;
+        int copy_id, success;
         String isbn, library_name;
 
         switch (intInput) {
@@ -25,7 +25,7 @@ public class CopiesHandler {
                 System.out.print("Enter the Library name that will have the copies: ");
                 library_name = UserInputHelper.getStringInput();
 
-                int success = this.copies.addCopies(copy_id, isbn, library_name);
+                success = this.copies.addCopies(copy_id, isbn, library_name);
                 if (success > 0) {
                     System.out.println("Copies registered successfully!");
                 } else if (success == 0) {
@@ -41,6 +41,14 @@ public class CopiesHandler {
                 System.out.print("Enter the copy id of the ISBN: ");
                 copy_id = UserInputHelper.getIntInput();
                 // Call method
+                success = this.copies.deleteCopies(isbn, copy_id);
+                if (success > 0) {
+                    System.out.println("Copies removed successfully!");
+                } else if (success == 0) {
+                    System.out.println("Copies does not exist!");
+                } else {
+                    System.out.println("Error deleting copies!");
+                }
                 break;
             case 3:
                 break;

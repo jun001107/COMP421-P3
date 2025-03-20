@@ -16,13 +16,25 @@ public class Copies {
             ps.setInt(1,copy_id);
             ps.setString(2, isbn);
             ps.setString(3, library_name);
-            ps.executeUpdate();
 
-            int rowsAffected = ps.executeUpdate();
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            int sqlCode = e.getErrorCode();
+            String sqlStatement = e.getSQLState();
+            System.out.println(sqlCode + " " + sqlStatement);
+            System.out.println("Message: " + e.getMessage());
+            return -1;
+        }
+    }
 
-            if (rowsAffected > 0) return rowsAffected;
-            else return 0;
+    public int deleteCopies(String isbn, int copy_id) {
+        String query = "DELETE FROM copies WHERE isbn = ? AND copy_id = ?";
 
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, isbn);
+            ps.setInt(2, copy_id);
+
+            return ps.executeUpdate();
         } catch (SQLException e) {
             int sqlCode = e.getErrorCode();
             String sqlStatement = e.getSQLState();
