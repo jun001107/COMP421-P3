@@ -13,6 +13,7 @@ public class MainApp {
     public static BookSearchHandler bookSearchHandler;
     public static Citizens citizensDAO;
     public static Copies copiesDAO;
+    public static CopiesHandler copiesHandler;
     public static Fines finesDAO;
     public static HasBook hasBookDAO;
     public static IsLocated isLocatedDAO;
@@ -29,7 +30,10 @@ public class MainApp {
         bookSearchHandler = new BookSearchHandler(booksDAO);
 
         citizensDAO = new Citizens(con);
+
         copiesDAO = new Copies(con);
+        copiesHandler = new CopiesHandler(copiesDAO);
+
         finesDAO = new Fines(con);
         hasBookDAO = new HasBook(con);
         isLocatedDAO = new IsLocated(con);
@@ -55,9 +59,11 @@ public class MainApp {
                     break;
                 case 2: // Check Book Availability
                     MenuHelper.displayCheckBookAvailability(); // display headline
+                    booksDAO.getBookAvailability();
                     break;
                 case 3: // Manage Copies
                     MenuHelper.displayManageCopies(); // display options
+                    copiesHandler.manageCopies();
                     break;
                 case 4: // Loan & Return Books
                     MenuHelper.displayLoanAndReturnBooks(); // display options

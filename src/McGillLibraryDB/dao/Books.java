@@ -107,4 +107,57 @@ public class Books {
             System.out.println("Message: " + e.getMessage());
         }
     }
+
+    public void getBookAvailability() {
+        String query = "WITH grouped_books AS ( " +
+                "    SELECT b.isbn, c.lib_name, COUNT(b.isbn) AS number_of_copies " +
+                "    FROM Books b " +
+                "    JOIN Copies c ON b.isbn = c.isbn " +
+                "    WHERE c.status = 'available' " +
+                "    GROUP BY b.isbn, c.lib_name " +
+                "), " +
+                "author_list AS ( " +
+                "    SELECT w.isbn, " +
+                "           LISTAGG(a.a_name, ', ') WITHIN GROUP ( ORDER BY a.a_name ) AS authors " +
+                "    FROM Wrote w " +
+                "    JOIN Authors a ON w.a_id = a.a_id " +
+                "    GROUP BY w.isbn " +
+                ") " +
+                "SELECT " +
+                "    b.isbn, " +
+                "    b.title, " +
+                "    al.authors, " +
+                "    g.lib_name, " +
+                "    g.number_of_copies " +
+                "FROM Books b " +
+                "JOIN grouped_books g ON b.isbn = g.isbn " +
+                "JOIN author_list al ON b.isbn = al.isbn";
+
+        try (Statement statement = this.connection.createStatement();
+            ResultSet rs = statement.executeQuery( query )) {
+            String format = "%-15s | %-40s | %-40s | %-30s | %-10s%n";
+            System.out.printf(format, "ISBN", "Title", "Authors", "Library", "Number of copies");
+            System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------");
+            boolean hasResults = false;
+
+            while (rs.next()) {
+                hasResults = true;
+                String isbn = rs.getString(1);
+                String title = rs.getString(2);
+                String author = rs.getString(3);
+                String libName = rs.getString(4);
+                String numberOfCopies = rs.getString(5);
+                System.out.printf(format, isbn, title, author, libName, numberOfCopies);
+            }
+
+            if (!hasResults) {
+                System.out.println("Currently all books are reserved.");
+            }
+        } catch (SQLException e) {
+            int sqlCode = e.getErrorCode();
+            String sqlStatement = e.getSQLState();
+            System.out.println(sqlCode + " " + sqlStatement);
+            System.out.println("Message: " + e.getMessage());
+        }
+    }
 }
