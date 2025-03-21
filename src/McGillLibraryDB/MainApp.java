@@ -21,19 +21,17 @@ public class MainApp {
     public static Locations locationsDAO;
     public static Reservations reservationsDAO;
     public static Wrote wroteDAO;
+    public static ReportDAO reportDAO;
+    public static GenerateReportHandler generateReportHandler;
 
     private static void initializeComponents(Connection con) {
         // Create the DAO instances using the shared connection
         authorsDAO = new Authors(con);
-
         booksDAO = new Books(con);
         bookSearchHandler = new BookSearchHandler(booksDAO);
-
         citizensDAO = new Citizens(con);
-
         copiesDAO = new Copies(con);
         copiesHandler = new CopiesHandler(copiesDAO);
-
         finesDAO = new Fines(con);
         hasBookDAO = new HasBook(con);
         isLocatedDAO = new IsLocated(con);
@@ -42,6 +40,8 @@ public class MainApp {
         locationsDAO = new Locations(con);
         reservationsDAO = new Reservations(con);
         wroteDAO = new Wrote(con);
+        reportDAO = new ReportDAO(con);
+        generateReportHandler = new GenerateReportHandler(reportDAO);
     }
 
     private static void runProgram() {
@@ -72,6 +72,7 @@ public class MainApp {
                     break;
                 case 5: // Generate Reports & Analytics
                     MenuHelper.displayGenerateReports(); // display options
+                    generateReportHandler.generateReports();
                     break;
                 case 6: // Quit
                     exit = true;

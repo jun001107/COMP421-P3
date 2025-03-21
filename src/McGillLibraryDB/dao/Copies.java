@@ -43,4 +43,21 @@ public class Copies {
             return -1;
         }
     }
+
+    public int updateStatus(String isbn, int copy_id, String status) {
+        String query = "UPDATE copies SET status = ? WHERE isbn = ? AND copy_id = ?";
+
+        try(PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, status);
+            ps.setString(2, isbn);
+            ps.setInt(3, copy_id);
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            int sqlCode = e.getErrorCode();
+            String sqlStatement = e.getSQLState();
+            System.out.println(sqlCode + " " + sqlStatement);
+            System.out.println("Message: " + e.getMessage());
+            return -1;
+        }
+    }
 }

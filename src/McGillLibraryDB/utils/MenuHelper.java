@@ -47,10 +47,9 @@ public class MenuHelper {
     public static void displayGenerateReports() {
         System.out.println("\n==== Generate Reports & Analytics =====");
         System.out.println("\t1. Popular Books Report");
-        System.out.println("\t2. User Borrowing History Report");
-        System.out.println("\t3. Overdue Books & Fines Report");
-        System.out.println("\t4. Library Branch Performance Report");
-        System.out.println("\t5. Go Back");
+        System.out.println("\t2. Overdue Books & Fines Report");
+        System.out.println("\t3. Library Branch Performance Report");
+        System.out.println("\t4. Go Back");
         System.out.print("Please Enter Your Choice: ");
     }
 }

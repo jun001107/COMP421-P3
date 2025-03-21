@@ -27,8 +27,6 @@ public class LoanHandler {
 
                 status = this.loans.addLoans(cardNumber, isbn, copyId);
                 if (status > 0) {
-                    // Handle copies = available.
-
                     System.out.println("==> Successfully issued a book ( ISBN: " + isbn + ", copy_id: " + copyId + ") to " + cardNumber);
                 } else if (status == 0) {
                     System.out.println("==> (ISBN: " + isbn + ", copy_id: " + copyId + ") is not available.");

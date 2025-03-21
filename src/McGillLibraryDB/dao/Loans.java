@@ -28,11 +28,15 @@ public class Loans {
         }
     }
 
+    private Copies initializeCopies() {
+        return new Copies(connection);
+    }
+
     public int addLoans(int card_num, String isbn, int copy_id) {
         int newLoanID = getNewLoanID(copy_id, isbn);
         Date today = new Date(System.currentTimeMillis());
         Date endDate = new Date(today.getTime() + 7 * 86400000L);
-        String comment;
+        int status;
 
         if (!isBookAvailable(copy_id, isbn)) return 0;
 
@@ -46,7 +50,13 @@ public class Loans {
             ps.setDate(5, endDate);
             ps.setInt(6, card_num);
 
-            return ps.executeUpdate();
+            status = ps.executeUpdate();
+            if (status > 0) {
+                initializeCopies().updateStatus(isbn, copy_id, "unavailable");
+            }
+
+            return status;
+
         } catch (SQLException e) {
             return -1;
         }
@@ -70,43 +80,31 @@ public class Loans {
     }
 
     public int updateCopyStatus(String isbn, int copy_id) {
-        String query = "UPDATE copies SET status=? WHERE isbn=? AND copy_id=?";
-
-        try(PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setString(1, "available");
-            ps.setString(2, isbn);
-            ps.setInt(3, copy_id);
-            return ps.executeUpdate();
-
-        } catch (SQLException e) {
-            int sqlCode = e.getErrorCode();
-            String sqlStatement = e.getSQLState();
-            System.out.println(sqlCode + " " + sqlStatement);
-            System.out.println("Message: " + e.getMessage());
-            return -1;
-        }
+        return initializeCopies().updateStatus(isbn, copy_id, "available");
     }
 
     public void getAllLoans() {
-        String query = "SELECT loan_id, copy_id, isbn, start_date, end_date, card_number " +
-                "FROM Loans";
+        String query = "SELECT l.loan_id, l.copy_id, l.isbn, l.start_date, l.end_date, l.card_number, c.status " +
+                "FROM Loans l " +
+                "JOIN Copies c ON l.isbn = c.isbn AND l.copy_id = c.COPY_ID";
 
         try (Statement statement = connection.createStatement();
         ResultSet rs = statement.executeQuery(query)) {
             boolean hasResult = false;
-            String format = "%-15s | %-15s | %-15s | %-15s | %-15s | %-15s%n";
-            System.out.printf(format, "Loan ID", "Copy ID", "ISBN", "START DATE", "END DATE", "Card Number");
-            System.out.println("-----------------------------------------------------------------------------------------------------------");
+            String format = "%-10s | %-10s | %-15s | %-15s | %-15s | %-12s | %-15s%n";
+            System.out.printf(format, "Loan ID", "Copy ID", "ISBN", "START DATE", "END DATE", "Card Number", "Status");
+            System.out.println("---------------------------------------------------------------------------------------------------------");
             while (rs.next()) {
                 hasResult = true;
-                int loan_id = rs.getInt("loan_id");
-                int copy_id = rs.getInt("copy_id");
-                String isbn = rs.getString("isbn");
-                Date start_date = rs.getDate("start_date");
-                Date end_date = rs.getDate("end_date");
-                int card_number = rs.getInt("card_number");
+                int loan_id = rs.getInt(1);
+                int copy_id = rs.getInt(2);
+                String isbn = rs.getString(3);
+                Date start_date = rs.getDate(4);
+                Date end_date = rs.getDate(5);
+                int card_number = rs.getInt(6);
+                String status = (rs.getString(7).equals("available"))? "returned":"Not returned";
 
-                System.out.printf(format, loan_id, copy_id, isbn, start_date, end_date, card_number);
+                System.out.printf(format, loan_id, copy_id, isbn, start_date, end_date, card_number, status);
             }
 
             if (!hasResult) {
