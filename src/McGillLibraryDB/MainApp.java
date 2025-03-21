@@ -4,7 +4,6 @@ import McGillLibraryDB.dao.*;
 import McGillLibraryDB.handler.*;
 import McGillLibraryDB.utils.*;
 
-import java.awt.*;
 import java.sql.*;
 
 public class MainApp {
@@ -18,6 +17,7 @@ public class MainApp {
     public static HasBook hasBookDAO;
     public static IsLocated isLocatedDAO;
     public static Loans loansDAO;
+    public static LoanHandler loanHandler;
     public static Locations locationsDAO;
     public static Reservations reservationsDAO;
     public static Wrote wroteDAO;
@@ -38,6 +38,7 @@ public class MainApp {
         hasBookDAO = new HasBook(con);
         isLocatedDAO = new IsLocated(con);
         loansDAO = new Loans(con);
+        loanHandler = new LoanHandler(loansDAO);
         locationsDAO = new Locations(con);
         reservationsDAO = new Reservations(con);
         wroteDAO = new Wrote(con);
@@ -67,6 +68,7 @@ public class MainApp {
                     break;
                 case 4: // Loan & Return Books
                     MenuHelper.displayLoanAndReturnBooks(); // display options
+                    loanHandler.manageLoans();
                     break;
                 case 5: // Generate Reports & Analytics
                     MenuHelper.displayGenerateReports(); // display options

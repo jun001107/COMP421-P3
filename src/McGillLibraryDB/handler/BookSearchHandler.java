@@ -30,6 +30,8 @@ public class BookSearchHandler {
                 strInput = UserInputHelper.getStringInput();
                 booksDAO.getBookByTitle(strInput);
                 break;
+            case 4:
+                break;
             default:
                 System.out.println("Invalid option. Please enter a valid option.");
                 break;

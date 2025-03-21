@@ -39,7 +39,7 @@ public class MenuHelper {
         System.out.println("\n==== Loan and Return Books =====");
         System.out.println("\t1. Issue a Book to a customer");
         System.out.println("\t2. Process Book Returns");
-        System.out.println("\t3. View Borrowing History");
+        System.out.println("\t3. View Complete Loan Transaction History");
         System.out.println("\t4. Go Back");
         System.out.print("Please Enter Your Choice: ");
     }
