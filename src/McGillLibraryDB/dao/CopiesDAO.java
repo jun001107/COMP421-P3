@@ -20,8 +20,7 @@ public class CopiesDAO {
             return ps.executeUpdate();
         } catch (SQLException e) {
             int sqlCode = e.getErrorCode();
-            String sqlStatement = e.getSQLState();
-            System.out.println("<< " + sqlCode + ": " + sqlStatement + " >>");
+            System.out.println("<< " + sqlCode + ": " + e.getMessage() + " >>");
             return -1;
         }
     }
@@ -36,8 +35,7 @@ public class CopiesDAO {
             return ps.executeUpdate();
         } catch (SQLException e) {
             int sqlCode = e.getErrorCode();
-            String sqlStatement = e.getSQLState();
-            System.out.println("<< " + sqlCode + ": " + sqlStatement + " >>");
+            System.out.println("<< " + sqlCode + ": " + e.getMessage() + " >>");
             return -1;
         }
     }
@@ -52,8 +50,7 @@ public class CopiesDAO {
             return ps.executeUpdate();
         } catch (SQLException e) {
             int sqlCode = e.getErrorCode();
-            String sqlStatement = e.getSQLState();
-            System.out.println("<< " + sqlCode + ": " + sqlStatement + " >>");
+            System.out.println("<< " + sqlCode + ": " + e.getMessage() + " >>");
             return -1;
         }
     }

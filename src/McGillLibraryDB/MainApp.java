@@ -5,11 +5,8 @@ import McGillLibraryDB.handler.*;
 import McGillLibraryDB.utils.*;
 
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class MainApp {
-    private static final Logger logger = Logger.getLogger(MainApp.class.getName());
 
     public static void main(String[] args){
         // Open the connection once for the entire application
@@ -56,8 +53,7 @@ public class MainApp {
             UserInputHelper.closeScanner();
         } catch (SQLException e) {
             int sqlCode = e.getErrorCode();
-            String sqlStatement = e.getSQLState();
-            System.out.println("<< " + sqlCode + ": " + sqlStatement + " >>");
+            System.out.println("<< " + sqlCode + ": " + e.getMessage() + " >>");
         }
     }
 }
