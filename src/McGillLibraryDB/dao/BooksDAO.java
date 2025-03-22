@@ -2,10 +2,10 @@ package McGillLibraryDB.dao;
 
 import java.sql.*;
 
-public class Books {
+public class BooksDAO {
     private final Connection connection;
 
-    public Books(Connection connection) {
+    public BooksDAO(Connection connection) {
         this.connection = connection;
     }
 
@@ -23,23 +23,26 @@ public class Books {
                 String title;
                 String author;
 
+                String format = "%-40s | %-40s%n";
+                System.out.printf(format, "Title", "Author");
+                System.out.println("----------------------------------------------------------------");
+
                 while (rs.next()) {
                     hasResults = true;
                     title = rs.getString("title");
                     author = rs.getString("a_name");
 
-                    System.out.println("<" + title + "> written by" + author);
+                    System.out.printf(format, title, author);
                 }
 
                 if (!hasResults) {
-                    System.out.println("No books found for genre " + genre);
+                    System.out.println("==> No books found for genre " + genre);
                 }
             }
         } catch (SQLException e) {
             int sqlCode = e.getErrorCode();
             String sqlStatement = e.getSQLState();
-            System.out.println(sqlCode + " " + sqlStatement);
-            System.out.println("Message: " + e.getMessage());
+            System.out.println("<< " + sqlCode + ": " + sqlStatement + " >>");
         }
     }
 
@@ -56,22 +59,25 @@ public class Books {
                 boolean hasResults = false;
                 String title;
 
+                String format = "%-40s | %-40s%n";
+                System.out.printf(format, "Title", "Author");
+                System.out.println("----------------------------------------------------------------");
+
                 while (rs.next()) {
                     hasResults = true;
                     title = rs.getString("title");
 
-                    System.out.println("<" + title + "> written by " + author);
+                    System.out.printf(format, title, author);
                 }
 
                 if (!hasResults) {
-                    System.out.println("No books found written by " + author);
+                    System.out.println("==> No books found written by " + author);
                 }
             }
         } catch (SQLException e) {
             int sqlCode = e.getErrorCode();
             String sqlStatement = e.getSQLState();
-            System.out.println(sqlCode + " " + sqlStatement);
-            System.out.println("Message: " + e.getMessage());
+            System.out.println("<< " + sqlCode + ": " + sqlStatement + " >>");
         }
     }
 
@@ -89,22 +95,25 @@ public class Books {
                 boolean hasResults = false;
                 String author;
 
+                String format = "%-40s | %-40s%n";
+                System.out.printf(format, "Title", "Author");
+                System.out.println("----------------------------------------------------------------");
+
                 while (rs.next()) {
                     hasResults = true;
                     author = rs.getString("author");
 
-                    System.out.println("<" + title + "> written by" + author);
+                    System.out.printf(format, author, title);
                 }
 
                 if (!hasResults) {
-                    System.out.println("No books found named " + title);
+                    System.out.println("==> No books found named " + title);
                 }
             }
         } catch (SQLException e) {
             int sqlCode = e.getErrorCode();
             String sqlStatement = e.getSQLState();
-            System.out.println(sqlCode + " " + sqlStatement);
-            System.out.println("Message: " + e.getMessage());
+            System.out.println("<< " + sqlCode + ": " + sqlStatement + " >>");
         }
     }
 
@@ -146,18 +155,17 @@ public class Books {
                 String title = rs.getString(2);
                 String author = rs.getString(3);
                 String libName = rs.getString(4);
-                String numberOfCopies = rs.getString(5);
+                int numberOfCopies = rs.getInt(5);
                 System.out.printf(format, isbn, title, author, libName, numberOfCopies);
             }
 
             if (!hasResults) {
-                System.out.println("Currently all books are reserved.");
+                System.out.println("==> Currently all books are reserved.");
             }
         } catch (SQLException e) {
             int sqlCode = e.getErrorCode();
             String sqlStatement = e.getSQLState();
-            System.out.println(sqlCode + " " + sqlStatement);
-            System.out.println("Message: " + e.getMessage());
+            System.out.println("<< " + sqlCode + ": " + sqlStatement + " >>");
         }
     }
 }

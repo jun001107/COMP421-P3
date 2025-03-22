@@ -15,24 +15,21 @@ public class GenerateReportHandler {
 
         switch (intInput) {
             case 1:
-                System.out.println("==== Popular Books Report ====");
-                // Call method
+                System.out.println("========== Popular Books Report ===========");
                 this.reportDAO.getPopularBooks();
                 break;
             case 2:
-                System.out.println("==== Overdue Books & Fines Report ====");
-                // Call method
+                System.out.println("========== Overdue Books & Fines Report ==========");
                 this.reportDAO.getOverdueLoans();
                 break;
             case 3:
-                System.out.println("==== Library Branch Performance Report ====");
-                // Call method
+                System.out.println("========== Library Branch Performance Report ==========");
                 this.reportDAO.getLibraryPerformance();
                 break;
             case 4:
                 break;
             default:
-                System.out.println("Invalid input");
+                System.out.println("==> Invalid input");
                 generateReports();
                 break;
         }

@@ -49,8 +49,7 @@ public class ReportDAO {
         } catch (SQLException e) {
             int sqlCode = e.getErrorCode();
             String sqlStatement = e.getSQLState();
-            System.out.println(sqlCode + " " + sqlStatement);
-            System.out.println("Message: " + e.getMessage());
+            System.out.println("<< " + sqlCode + ": " + sqlStatement + " >>");
         }
     }
 
@@ -89,8 +88,7 @@ public class ReportDAO {
         } catch(SQLException e) {
             int sqlCode = e.getErrorCode();
             String sqlStatement = e.getSQLState();
-            System.out.println(sqlCode + " " + sqlStatement);
-            System.out.println("Message: " + e.getMessage());
+            System.out.println("<< " + sqlCode + ": " + sqlStatement + " >>");
         }
     }
 
@@ -134,8 +132,7 @@ public class ReportDAO {
         } catch (SQLException e) {
             int sqlCode = e.getErrorCode();
             String sqlStatement = e.getSQLState();
-            System.out.println(sqlCode + " " + sqlStatement);
-            System.out.println("Message: " + e.getMessage());
+            System.out.println("<< " + sqlCode + ": " + sqlStatement + " >>");
         }
     }
 }

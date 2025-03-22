@@ -2,10 +2,10 @@ package McGillLibraryDB.dao;
 
 import java.sql.*;
 
-public class Loans {
+public class LoansDAO {
     private final Connection connection;
 
-    public Loans(Connection connection) {
+    public LoansDAO(Connection connection) {
         this.connection = connection;
     }
 
@@ -24,12 +24,15 @@ public class Loans {
                 return -1;
             }
         } catch(SQLException e) {
+            int sqlCode = e.getErrorCode();
+            String sqlStatement = e.getSQLState();
+            System.out.println("<< " + sqlCode + ": " + sqlStatement + " >>");
             return -1;
         }
     }
 
-    private Copies initializeCopies() {
-        return new Copies(connection);
+    private CopiesDAO initializeCopies() {
+        return new CopiesDAO(connection);
     }
 
     public int addLoans(int card_num, String isbn, int copy_id) {
@@ -58,6 +61,9 @@ public class Loans {
             return status;
 
         } catch (SQLException e) {
+            int sqlCode = e.getErrorCode();
+            String sqlStatement = e.getSQLState();
+            System.out.println("<< " + sqlCode + ": " + sqlStatement + " >>");
             return -1;
         }
     }
@@ -75,6 +81,9 @@ public class Loans {
             }
             return false;
         } catch (SQLException e) {
+            int sqlCode = e.getErrorCode();
+            String sqlStatement = e.getSQLState();
+            System.out.println("<< " + sqlCode + ": " + sqlStatement + " >>");
             return false;
         }
     }
@@ -108,13 +117,12 @@ public class Loans {
             }
 
             if (!hasResult) {
-                System.out.println("History is empty");
+                System.out.println("==> History is empty");
             }
         } catch (SQLException e) {
             int sqlCode = e.getErrorCode();
             String sqlStatement = e.getSQLState();
-            System.out.println(sqlCode + " " + sqlStatement);
-            System.out.println("Message: " + e.getMessage());
+            System.out.println("<< " + sqlCode + ": " + sqlStatement + " >>");
         }
     }
 }

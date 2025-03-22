@@ -1,12 +1,12 @@
 package McGillLibraryDB.handler;
 
-import McGillLibraryDB.dao.Copies;
+import McGillLibraryDB.dao.CopiesDAO;
 import McGillLibraryDB.utils.UserInputHelper;
 
 public class CopiesHandler {
-    private final Copies copies;
+    private final CopiesDAO copies;
 
-    public CopiesHandler(Copies copies) {
+    public CopiesHandler(CopiesDAO copies) {
         this.copies = copies;
     }
 
@@ -17,43 +17,43 @@ public class CopiesHandler {
 
         switch (intInput) {
             case 1: // Register a new copies
-                System.out.println("==== Register a new copies ====");
-                System.out.print("Enter the copy id: ");
+                System.out.println("========== Register a new copies ==========");
+                System.out.print("> Enter the copy id: ");
                 copy_id = UserInputHelper.getIntInput();
-                System.out.print("Enter the isbn of the copies: ");
+                System.out.print("> Enter the isbn of the copies: ");
                 isbn = UserInputHelper.getStringInput();
-                System.out.print("Enter the Library name that will have the copies: ");
+                System.out.print("> Enter the Library name that will have the copies: ");
                 library_name = UserInputHelper.getStringInput();
 
                 success = this.copies.addCopies(copy_id, isbn, library_name);
                 if (success > 0) {
-                    System.out.println("Copies registered successfully!");
+                    System.out.println("==> Copies registered successfully!");
                 } else if (success == 0) {
-                    System.out.println("Copies already registered!");
+                    System.out.println("==> Copies already registered!");
                 } else {
-                    System.out.println("Error registering copies!");
+                    System.out.println("==> Error registering copies!");
                 }
                 break;
             case 2: // Remove a copy
-                System.out.println("==== Remove a copy ====");
-                System.out.print("Enter the ISBN of the book that you want to remove: ");
+                System.out.println("========== Remove a copy ==========");
+                System.out.print("> Enter the ISBN of the book that you want to remove: ");
                 isbn = UserInputHelper.getStringInput();
-                System.out.print("Enter the copy id of the ISBN: ");
+                System.out.print("> Enter the copy id of the ISBN: ");
                 copy_id = UserInputHelper.getIntInput();
-                // Call method
+
                 success = this.copies.deleteCopies(isbn, copy_id);
                 if (success > 0) {
-                    System.out.println("Copies removed successfully!");
+                    System.out.println("==> Copies removed successfully!");
                 } else if (success == 0) {
-                    System.out.println("Copies does not exist!");
+                    System.out.println("==> Copies does not exist!");
                 } else {
-                    System.out.println("Error deleting copies!");
+                    System.out.println("==> Error deleting copies!");
                 }
                 break;
             case 3:
                 break;
             default:
-                System.out.println("Invalid input!");
+                System.out.println("==> Invalid input!");
                 manageCopies();
                 break;
         }

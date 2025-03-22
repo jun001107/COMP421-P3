@@ -1,12 +1,12 @@
 package McGillLibraryDB.handler;
 
-import McGillLibraryDB.dao.Loans;
+import McGillLibraryDB.dao.LoansDAO;
 import McGillLibraryDB.utils.UserInputHelper;
 
 public class LoanHandler {
-    private final Loans loans;
+    private final LoansDAO loans;
 
-    public LoanHandler(Loans loans) {
+    public LoanHandler(LoansDAO loans) {
         this.loans = loans;
     }
 
@@ -17,12 +17,12 @@ public class LoanHandler {
 
         switch (intInput) {
             case 1: // Issue a book to a customer
-                System.out.println("==== Issue a Book to a customer ====");
-                System.out.print("Enter a card number: ");
+                System.out.println("========== Issue a Book to a customer ==========");
+                System.out.print("> Enter a card number: ");
                 int cardNumber = UserInputHelper.getIntInput();
-                System.out.print("Enter Book ISBN: ");
+                System.out.print("> Enter Book ISBN: ");
                 isbn = UserInputHelper.getStringInput();
-                System.out.print("Enter Book copy id: ");
+                System.out.print("> Enter Book copy id: ");
                 copyId = UserInputHelper.getIntInput();
 
                 status = this.loans.addLoans(cardNumber, isbn, copyId);
@@ -35,10 +35,10 @@ public class LoanHandler {
                 }
                 break;
             case 2: //
-                System.out.println("==== Process Book Returns ====");
-                System.out.print("Enter Book ISBN: ");
+                System.out.println("========== Process Book Returns ==========");
+                System.out.print("> Enter Book ISBN: ");
                 isbn = UserInputHelper.getStringInput();
-                System.out.print("Enter Book copy id: ");
+                System.out.print("> Enter Book copy id: ");
                 copyId = UserInputHelper.getIntInput();
                 // Call method
                 status = this.loans.updateCopyStatus(isbn, copyId);
@@ -49,7 +49,7 @@ public class LoanHandler {
                 }
                 break;
             case 3:
-                System.out.println("==== View Borrowing History ====");
+                System.out.println("========== View Borrowing History ==========");
                 // Call method
                 this.loans.getAllLoans();
             case 4:

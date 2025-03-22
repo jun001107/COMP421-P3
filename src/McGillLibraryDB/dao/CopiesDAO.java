@@ -2,10 +2,10 @@ package McGillLibraryDB.dao;
 
 import java.sql.*;
 
-public class Copies {
+public class CopiesDAO {
     private Connection connection;
 
-    public Copies(Connection connection) {
+    public CopiesDAO(Connection connection) {
         this.connection = connection;
     }
 
@@ -21,8 +21,7 @@ public class Copies {
         } catch (SQLException e) {
             int sqlCode = e.getErrorCode();
             String sqlStatement = e.getSQLState();
-            System.out.println(sqlCode + " " + sqlStatement);
-            System.out.println("Message: " + e.getMessage());
+            System.out.println("<< " + sqlCode + ": " + sqlStatement + " >>");
             return -1;
         }
     }
@@ -38,8 +37,7 @@ public class Copies {
         } catch (SQLException e) {
             int sqlCode = e.getErrorCode();
             String sqlStatement = e.getSQLState();
-            System.out.println(sqlCode + " " + sqlStatement);
-            System.out.println("Message: " + e.getMessage());
+            System.out.println("<< " + sqlCode + ": " + sqlStatement + " >>");
             return -1;
         }
     }
@@ -55,8 +53,7 @@ public class Copies {
         } catch (SQLException e) {
             int sqlCode = e.getErrorCode();
             String sqlStatement = e.getSQLState();
-            System.out.println(sqlCode + " " + sqlStatement);
-            System.out.println("Message: " + e.getMessage());
+            System.out.println("<< " + sqlCode + ": " + sqlStatement + " >>");
             return -1;
         }
     }
