@@ -1,4 +1,4 @@
-package McGillLibraryDB.utils;
+package utils;
 
 public class MenuHelper {
     public static void displayMainMenu() {

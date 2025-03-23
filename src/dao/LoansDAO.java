@@ -1,4 +1,4 @@
-package McGillLibraryDB.dao;
+package dao;
 
 import java.sql.*;
 
@@ -88,8 +88,41 @@ public class LoansDAO {
         }
     }
 
+    private void callUpdateStatusFines() {
+        String sql = "{CALL UpdateResFines()}";
+
+        try (CallableStatement cstmt = connection.prepareCall(sql)) {
+            cstmt.execute();
+        } catch (SQLException e) {
+            int sqlCode = e.getErrorCode();
+            System.out.println("<< " + sqlCode + ": " + e.getMessage() + " >>");
+        }
+    }
+
     public int updateCopyStatus(String isbn, int copy_id) {
-        return initializeCopies().updateStatus(isbn, copy_id, "available");
+        int status = initializeCopies().updateStatus(isbn, copy_id, "available");
+
+        if (status > 0) { // Update end_date = current date
+            String query = "UPDATE Loans SET end_date = CURRENT DATE " +
+                    "WHERE isbn = ? AND copy_id = ? " +
+                    "AND loan_id = ( " +
+                    "   SELECT MAX(loan_id) "+
+                    "   FROM Loans WHERE isbn = ? AND copy_id = ?)";
+
+            try (PreparedStatement ps = connection.prepareStatement(query)) {
+                ps.setString(1, isbn);
+                ps.setInt(2, copy_id);
+                ps.setString(3, isbn);
+                ps.setInt(4, copy_id);
+                ps.executeUpdate();
+            } catch(SQLException e) {
+                System.out.println("<< " + e.getErrorCode() + ": " + e.getSQLState() + " >>");
+                return -1;
+            }
+            callUpdateStatusFines();
+        }
+
+        return status;
     }
 
     public void getAllLoans() {

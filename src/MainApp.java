@@ -1,8 +1,6 @@
-package McGillLibraryDB;
-
-import McGillLibraryDB.dao.*;
-import McGillLibraryDB.handler.*;
-import McGillLibraryDB.utils.*;
+import dao.*;
+import handler.*;
+import utils.*;
 
 import java.sql.*;
 

@@ -1,7 +1,7 @@
-package McGillLibraryDB.handler;
+package handler;
 
-import McGillLibraryDB.dao.LoansDAO;
-import McGillLibraryDB.utils.UserInputHelper;
+import dao.LoansDAO;
+import utils.UserInputHelper;
 
 public class LoanHandler {
     private final LoansDAO loans;

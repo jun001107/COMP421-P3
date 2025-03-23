@@ -1,6 +1,6 @@
-package McGillLibraryDB.handler;
+package handler;
 
-import McGillLibraryDB.dao.DAOFactory;
+import dao.DAOFactory;
 
 public class AppController {
     private final BookSearchHandler bookSearchHandler;

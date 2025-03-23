@@ -1,4 +1,4 @@
-package McGillLibraryDB.dao;
+package dao;
 
 import java.sql.*;
 
@@ -99,9 +99,9 @@ public class BooksDAO {
 
                 while (rs.next()) {
                     hasResults = true;
-                    author = rs.getString("author");
+                    author = rs.getString("a_name");
 
-                    System.out.printf(format, author, title);
+                    System.out.printf(format, title, author);
                 }
 
                 if (!hasResults) {

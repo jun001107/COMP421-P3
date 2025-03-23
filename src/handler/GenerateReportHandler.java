@@ -1,7 +1,7 @@
-package McGillLibraryDB.handler;
+package handler;
 
-import McGillLibraryDB.dao.*;
-import McGillLibraryDB.utils.UserInputHelper;
+import dao.*;
+import utils.UserInputHelper;
 
 public class GenerateReportHandler {
     private final ReportDAO reportDAO;

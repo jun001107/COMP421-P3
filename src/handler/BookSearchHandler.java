@@ -1,7 +1,7 @@
-package McGillLibraryDB.handler;
+package handler;
 
-import McGillLibraryDB.dao.BooksDAO;
-import McGillLibraryDB.utils.UserInputHelper;
+import dao.BooksDAO;
+import utils.UserInputHelper;
 
 public class BookSearchHandler {
     private final BooksDAO booksDAO;

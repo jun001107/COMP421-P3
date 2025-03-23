@@ -1,4 +1,4 @@
-package McGillLibraryDB.dao;
+package dao;
 
 import java.sql.*;
 
@@ -9,11 +9,31 @@ public class CopiesDAO {
         this.connection = connection;
     }
 
-    public int addCopies(int copy_id, String isbn, String library_name) {
+    private int newCopyID(String isbn) {
+        String query = "SELECT MAX(copy_id) FROM COPIES WHERE ISBN = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, isbn);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    int maxLoanId = rs.getInt(1);
+                    return rs.wasNull() ? 1 : maxLoanId + 1;
+                }
+                return -1;
+            }
+        } catch (SQLException e) {
+            int sqlCode = e.getErrorCode();
+            System.out.println("<< " + sqlCode + ": " + e.getMessage() + " >>");
+            return -1;
+        }
+    }
+
+    public int addCopies(String isbn, String library_name) {
         String query = "INSERT INTO copies VALUES (?, ?, 'available', ?)";
 
         try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setInt(1,copy_id);
+            ps.setInt(1, newCopyID(isbn));
             ps.setString(2, isbn);
             ps.setString(3, library_name);
 

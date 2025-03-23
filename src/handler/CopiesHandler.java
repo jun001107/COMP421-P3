@@ -1,7 +1,7 @@
-package McGillLibraryDB.handler;
+package handler;
 
-import McGillLibraryDB.dao.CopiesDAO;
-import McGillLibraryDB.utils.UserInputHelper;
+import dao.CopiesDAO;
+import utils.UserInputHelper;
 
 public class CopiesHandler {
     private final CopiesDAO copies;
@@ -18,14 +18,12 @@ public class CopiesHandler {
         switch (intInput) {
             case 1: // Register a new copies
                 System.out.println("========== Register a new copies ==========");
-                System.out.print("> Enter the copy id: ");
-                copy_id = UserInputHelper.getIntInput();
                 System.out.print("> Enter the isbn of the copies: ");
                 isbn = UserInputHelper.getStringInput();
                 System.out.print("> Enter the Library name that will have the copies: ");
                 library_name = UserInputHelper.getStringInput();
 
-                success = this.copies.addCopies(copy_id, isbn, library_name);
+                success = this.copies.addCopies(isbn, library_name);
                 if (success > 0) {
                     System.out.println("==> Copies registered successfully!");
                 } else if (success == 0) {
