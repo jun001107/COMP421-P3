@@ -62,7 +62,7 @@ public class CopiesDAO {
 
     public int updateStatus(String isbn, int copy_id, String status) {
         String query = "UPDATE copies SET status = ? WHERE isbn = ? AND copy_id = ?";
-
+        
         try(PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, status);
             ps.setString(2, isbn);

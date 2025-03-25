@@ -42,7 +42,10 @@ public class LoanHandler {
                 copyId = UserInputHelper.getIntInput();
                 // Call method
                 status = this.loans.updateCopyStatus(isbn, copyId);
-                if (status > 0) {
+                if (status == 100) {
+                    System.out.println("==> Error: Book issued today. You can return from tomorrow.");
+                }
+                else if (status > 0) {
                     System.out.println("==> Completely returned book.");
                 } else {
                     System.out.println("==> Error on processing a book. Please try again.");

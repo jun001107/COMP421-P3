@@ -99,7 +99,37 @@ public class LoansDAO {
         }
     }
 
+    private boolean canReturnToday(String isbn, int copy_id) {
+        String query = "SELECT start_date FROM Loans WHERE isbn=? AND copy_id=? " +
+                "AND loan_id = ( SELECT MAX(loan_id) FROM Loans WHERE isbn=? AND copy_id=?)";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            // Set parameters for main query and subquery.
+            ps.setString(1, isbn);
+            ps.setInt(2, copy_id);
+            ps.setString(3, isbn);
+            ps.setInt(4, copy_id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Date startDate = rs.getDate("start_date");
+                    // Create a current date. Since java.sql.Date represents date only, this is sufficient.
+                    Date currentDate = Date.valueOf(java.time.LocalDate.now());
+                    // Check if start_date equals the current date.
+                    if (startDate.equals(currentDate)) {
+                        // Not allowed to return if the loan was issued today.
+                        return false;
+                    }
+                }
+            }
+        } catch(SQLException e) {
+            System.out.println("<< " + e.getErrorCode() + ": " + e.getSQLState() + " >>");
+            return false;
+        }
+        return true;
+    }
+
     public int updateCopyStatus(String isbn, int copy_id) {
+        if (!canReturnToday(isbn, copy_id)) return 100;
+
         int status = initializeCopies().updateStatus(isbn, copy_id, "available");
 
         if (status > 0) { // Update end_date = current date
