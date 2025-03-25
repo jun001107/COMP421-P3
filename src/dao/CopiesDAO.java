@@ -29,10 +29,42 @@ public class CopiesDAO {
         }
     }
 
+    private int addBookToLib(String isbn, String lib_name) {
+        String query = "INSERT INTO HAS_BOOK (ISBN, LIB_NAME) VALUES(?, ?)";
+
+        try(PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, isbn);
+            ps.setString(2, lib_name);
+            return ps.executeUpdate();
+        } catch(SQLException e) {
+            int sqlCode = e.getErrorCode();
+            System.out.println("<< " + sqlCode + ": " + e.getMessage() + " >>");
+            return -1;
+        }
+    }
+
+    private int checkHasBook(String isbn, String lib_name) {
+        String query = "SELECT * FROM HAS_BOOK WHERE ISBN = ? AND lib_name = ?";
+
+        try(PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, isbn);
+            ps.setString(2, lib_name);
+            try(ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return 1;
+                else return addBookToLib(isbn, lib_name);
+            }
+        } catch(SQLException e) {
+            int sqlCode = e.getErrorCode();
+            System.out.println("<< " + sqlCode + ": " + e.getMessage() + " >>");
+            return -1;
+        }
+    }
+
     public int addCopies(String isbn, String library_name) {
         String query = "INSERT INTO copies VALUES (?, ?, 'available', ?)";
 
         try (PreparedStatement ps = connection.prepareStatement(query)) {
+            checkHasBook(isbn, library_name);
             ps.setInt(1, newCopyID(isbn));
             ps.setString(2, isbn);
             ps.setString(3, library_name);
