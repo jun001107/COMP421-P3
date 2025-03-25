@@ -126,9 +126,11 @@ public class LoansDAO {
     }
 
     public void getAllLoans() {
-        String query = "SELECT l.loan_id, l.copy_id, l.isbn, l.start_date, l.end_date, l.card_number, c.status " +
+        String query = "SELECT l.loan_id, l.copy_id, l.isbn, l.start_date, l.end_date, l.card_number, " +
+                "CASE WHEN l.loan_id = (SELECT MAX(loan_id) FROM Loans WHERE isbn = l.isbn AND copy_id = l.copy_id) " +
+                "THEN c.status ELSE 'available' END as effective_status " +
                 "FROM Loans l " +
-                "JOIN Copies c ON l.isbn = c.isbn AND l.copy_id = c.COPY_ID";
+                "JOIN Copies c ON l.isbn = c.isbn AND l.copy_id = c.copy_id";
 
         try (Statement statement = connection.createStatement();
         ResultSet rs = statement.executeQuery(query)) {
@@ -144,7 +146,7 @@ public class LoansDAO {
                 Date start_date = rs.getDate(4);
                 Date end_date = rs.getDate(5);
                 int card_number = rs.getInt(6);
-                String status = (rs.getString(7).equals("available"))? "returned":"Not returned";
+                String status = (rs.getString("effective_status").equals("available"))? "returned":"Not returned";
 
                 System.out.printf(format, loan_id, copy_id, isbn, start_date, end_date, card_number, status);
             }
